@@ -22,10 +22,15 @@ class EmptyState extends StatelessWidget {
             Text('Inga abonnemang ännu', style: theme.textTheme.titleLarge),
             const SizedBox(height: 8),
             const Text(
-              'Lägg till ditt första abonnemang eller prenumeration för att se månadskostnad och få påminnelser.',
+              'Lägg till ditt första abonnemang för att se månadskostnad och få påminnelser.',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: onAdd,
+              icon: const Icon(Icons.add),
+              label: const Text('Lägg till abonnemang'),
+            ),
           ],
         ),
       ),

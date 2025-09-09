@@ -8,19 +8,16 @@ class SubscriptionRepo {
     return await isar.subscriptions.where().findAll();
   }
 
-  /// Reactive stream of all subscriptions. Fires immediately, then on any change.
   Stream<List<Subscription>> watchAll() async* {
     final isar = await IsarService.db();
-    // You can filter here if you only want active ones:
-    // final query = isar.subscriptions.filter().isActiveEqualTo(true);
-    final query = isar.subscriptions.where();
-    yield* query.watch(fireImmediately: true);
+    yield* isar.subscriptions.where().watch(fireImmediately: true);
   }
 
-  Future<void> add(Subscription sub) async {
+  Future<int> add(Subscription sub) async {
     final isar = await IsarService.db();
-    await isar.writeTxn(() async {
-      await isar.subscriptions.put(sub);
+    return await isar.writeTxn(() async {
+      final id = await isar.subscriptions.put(sub);
+      return id; // Isar Id (int)
     });
   }
 
