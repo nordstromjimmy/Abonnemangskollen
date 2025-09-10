@@ -26,11 +26,11 @@ class EmptyState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            FilledButton.icon(
+            /* FilledButton.icon(
               onPressed: onAdd,
               icon: const Icon(Icons.add),
               label: const Text('Lägg till abonnemang'),
-            ),
+            ), */
           ],
         ),
       ),

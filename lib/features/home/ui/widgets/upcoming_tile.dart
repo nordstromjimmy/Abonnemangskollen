@@ -23,9 +23,9 @@ class UpcomingTile extends StatelessWidget {
         trailingPrice,
         style: Theme.of(context).textTheme.titleMedium,
       ),
-      onTap: () {
+      /*       onTap: () {
         // TODO: Navigate to details/edit screen
-      },
+      }, */
     );
   }
 }

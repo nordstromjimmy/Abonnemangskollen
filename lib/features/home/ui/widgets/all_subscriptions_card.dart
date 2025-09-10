@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../../../../shared/formatters/money.dart';
 import '../../../subscriptions/data/subscription.dart';
 
-class RecentCard extends StatelessWidget {
+class AllSubscriptionsCard extends StatelessWidget {
   final List<Subscription> items;
-  const RecentCard({super.key, required this.items});
+  final void Function(Subscription)? onTap;
+  const AllSubscriptionsCard({super.key, required this.items, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class RecentCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Senast tillagt', style: theme.textTheme.titleMedium),
+            Text('Alla dina abonnemang', style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
             if (items.isEmpty)
               const Text('Inga abonnemang tillagda ännu')
@@ -30,6 +31,7 @@ class RecentCard extends StatelessWidget {
                   title: Text(s.name),
                   subtitle: Text(s.category ?? '—'),
                   trailing: Text(MoneyFmt.sekText(s.price)),
+                  onTap: onTap == null ? null : () => onTap!(s),
                 ),
               ),
           ],

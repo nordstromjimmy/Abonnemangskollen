@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import '../../subscriptions/data/subscription.dart';
 
 @immutable
-class AddSubState {
+class EditSubState {
+  final int id;
   final String name;
   final String? category;
   final String currency;
@@ -14,25 +15,38 @@ class AddSubState {
   final bool isSaving;
   final String? error;
 
-  AddSubState({
-    this.name = '',
-    this.category,
-    this.currency = 'SEK',
-    this.price,
-    this.period = BillingPeriod.monthly,
-    this.customInterval,
-    DateTime? nextRenewal,
-    this.notifyDaysBefore = 14,
+  const EditSubState({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.currency,
+    required this.price,
+    required this.period,
+    required this.customInterval,
+    required this.nextRenewal,
+    required this.notifyDaysBefore,
     this.isSaving = false,
     this.error,
-  }) : nextRenewal = nextRenewal ?? _defaultNext();
+  });
+
+  factory EditSubState.fromSub(Subscription s) => EditSubState(
+    id: s.id,
+    name: s.name,
+    category: s.category,
+    currency: s.currency,
+    price: s.price,
+    period: s.period,
+    customInterval: s.customInterval,
+    nextRenewal: s.nextRenewal,
+    notifyDaysBefore: s.notifyDaysBefore,
+  );
 
   bool get valid =>
       name.trim().isNotEmpty &&
       (price ?? 0) > 0 &&
       (period != BillingPeriod.custom || (customInterval ?? 0) > 0);
 
-  AddSubState copyWith({
+  EditSubState copyWith({
     String? name,
     String? category,
     String? currency,
@@ -43,7 +57,8 @@ class AddSubState {
     int? notifyDaysBefore,
     bool? isSaving,
     String? error,
-  }) => AddSubState(
+  }) => EditSubState(
+    id: id,
     name: name ?? this.name,
     category: category ?? this.category,
     currency: currency ?? this.currency,
@@ -55,9 +70,4 @@ class AddSubState {
     isSaving: isSaving ?? this.isSaving,
     error: error,
   );
-
-  static DateTime _defaultNext() {
-    final now = DateTime.now();
-    return DateTime(now.year, now.month, now.day);
-  }
 }
