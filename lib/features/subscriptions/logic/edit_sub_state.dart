@@ -12,6 +12,7 @@ class EditSubState {
   final int? customInterval;
   final DateTime nextRenewal;
   final int notifyDaysBefore;
+  final String? notes;
   final bool isSaving;
   final String? error;
 
@@ -25,6 +26,7 @@ class EditSubState {
     required this.customInterval,
     required this.nextRenewal,
     required this.notifyDaysBefore,
+    this.notes,
     this.isSaving = false,
     this.error,
   });
@@ -39,6 +41,7 @@ class EditSubState {
     customInterval: s.customInterval,
     nextRenewal: s.nextRenewal,
     notifyDaysBefore: s.notifyDaysBefore,
+    notes: s.notes,
   );
 
   bool get valid =>
@@ -55,6 +58,7 @@ class EditSubState {
     int? customInterval,
     DateTime? nextRenewal,
     int? notifyDaysBefore,
+    String? notes,
     bool? isSaving,
     String? error,
   }) => EditSubState(
@@ -67,6 +71,7 @@ class EditSubState {
     customInterval: customInterval ?? this.customInterval,
     nextRenewal: nextRenewal ?? this.nextRenewal,
     notifyDaysBefore: notifyDaysBefore ?? this.notifyDaysBefore,
+    notes: notes ?? this.notes,
     isSaving: isSaving ?? this.isSaving,
     error: error,
   );

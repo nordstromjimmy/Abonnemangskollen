@@ -11,6 +11,7 @@ class AddSubState {
   final int? customInterval;
   final DateTime nextRenewal;
   final int notifyDaysBefore;
+  final String? notes;
   final bool isSaving;
   final String? error;
 
@@ -23,6 +24,7 @@ class AddSubState {
     this.customInterval,
     DateTime? nextRenewal,
     this.notifyDaysBefore = 14,
+    this.notes,
     this.isSaving = false,
     this.error,
   }) : nextRenewal = nextRenewal ?? _defaultNext();
@@ -41,6 +43,7 @@ class AddSubState {
     int? customInterval,
     DateTime? nextRenewal,
     int? notifyDaysBefore,
+    String? notes,
     bool? isSaving,
     String? error,
   }) => AddSubState(
@@ -52,6 +55,7 @@ class AddSubState {
     customInterval: customInterval ?? this.customInterval,
     nextRenewal: nextRenewal ?? this.nextRenewal,
     notifyDaysBefore: notifyDaysBefore ?? this.notifyDaysBefore,
+    notes: notes ?? this.notes,
     isSaving: isSaving ?? this.isSaving,
     error: error,
   );

@@ -19,6 +19,7 @@ class _EditSubscriptionScreenState
   late final TextEditingController _priceCtrl;
   late final TextEditingController _customIntervalCtrl;
   late final TextEditingController _notifyDaysCtrl;
+  late final TextEditingController _notesCtrl;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _EditSubscriptionScreenState
     _notifyDaysCtrl = TextEditingController(
       text: (s.notifyDaysBefore).toString(),
     );
+    _notesCtrl = TextEditingController(text: s.notes ?? '');
   }
 
   @override
@@ -42,6 +44,7 @@ class _EditSubscriptionScreenState
     _priceCtrl.dispose();
     _customIntervalCtrl.dispose();
     _notifyDaysCtrl.dispose();
+    _notesCtrl.dispose();
     super.dispose();
   }
 
@@ -70,22 +73,29 @@ class _EditSubscriptionScreenState
         title: const Text('Redigera abonnemang'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_outline),
+            icon: const Icon(Icons.delete),
             color: Colors.red,
             onPressed: () async {
               final confirm = await showDialog<bool>(
                 context: context,
                 builder: (_) => AlertDialog(
-                  title: const Text('Radera abonnemang?'),
-                  content: const Text('Detta går inte att ångra.'),
+                  title: const Text('Radera abonnemang'),
+                  content: const Text(
+                    'Är du säker på att du vill radera abonnemanget ifrån appen?',
+                  ),
                   actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text('Avbryt'),
-                    ),
-                    FilledButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text('Radera'),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: const Text('Avbryt'),
+                        ),
+                        Spacer(),
+                        FilledButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: const Text('Radera'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -197,6 +207,18 @@ class _EditSubscriptionScreenState
             ),
             onChanged: (v) =>
                 noti.setNotifyDays(int.tryParse(v) ?? state.notifyDaysBefore),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _notesCtrl,
+            minLines: 1,
+            maxLines: 5,
+            textInputAction: TextInputAction.newline,
+            decoration: const InputDecoration(
+              labelText: 'Anteckningar (valfritt)',
+              //hintText: 't.ex. kundnr, uppsägningstid, avtalslängd…',
+            ),
+            onChanged: noti.setNotes, // ⬅️ new
           ),
           const SizedBox(height: 20),
           if (state.error != null)

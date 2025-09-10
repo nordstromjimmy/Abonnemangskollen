@@ -17,6 +17,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   final _priceCtrl = TextEditingController();
   final _customIntervalCtrl = TextEditingController(text: '1');
   final _notifyDaysCtrl = TextEditingController(text: '14');
+  final _notesCtrl = TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +26,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
     _priceCtrl.dispose();
     _customIntervalCtrl.dispose();
     _notifyDaysCtrl.dispose();
+    _notesCtrl.dispose();
     super.dispose();
   }
 
@@ -147,6 +149,18 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
               labelText: 'Påminnelse (dagar innan)',
             ),
             onChanged: (v) => noti.setNotifyDays(int.tryParse(v) ?? 14),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: _notesCtrl,
+            minLines: 1,
+            maxLines: 5,
+            textInputAction: TextInputAction.newline,
+            decoration: const InputDecoration(
+              labelText: 'Anteckningar (valfritt)',
+              //hintText: 't.ex. kundnr, autogiro, uppsägningstid, avtalslängd…',
+            ),
+            onChanged: noti.setNotes,
           ),
           const SizedBox(height: 20),
           if (state.error != null)

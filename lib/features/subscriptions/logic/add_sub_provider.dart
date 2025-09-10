@@ -32,6 +32,7 @@ class AddSubNotifier extends StateNotifier<AddSubState> {
       state = state.copyWith(customInterval: int.tryParse(v));
   void setNextRenewal(DateTime d) => state = state.copyWith(nextRenewal: d);
   void setNotifyDays(int v) => state = state.copyWith(notifyDaysBefore: v);
+  void setNotes(String v) => state = state.copyWith(notes: v);
 
   Future<bool> save() async {
     if (!state.valid) {
@@ -51,6 +52,7 @@ class AddSubNotifier extends StateNotifier<AddSubState> {
           : null
       ..nextRenewal = state.nextRenewal
       ..notifyDaysBefore = state.notifyDaysBefore
+      ..notes = state.notes?.trim()
       ..isActive = true;
 
     try {
